@@ -9,4 +9,5 @@ Encoding: UTF-8
 LazyData: true
 VignetteBuilder: knitr
 Suggests: knitr
-Imports: dplyr
+Imports: dplyr, DBI, RPostgreSQL, tidytext, ggplot2, reshape2, reshape, purrr, plyr, stringr
+BugReports: https://github.com/ahdvnd/moocr/issues
