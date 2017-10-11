@@ -1,7 +1,8 @@
 moocr_import <- function(rmd = TRUE, workdir = getwd()) {
     
-    proceedstatus <- readline("The following procedure to import your data may take a while. Do you want to proceed? (y/n)")
+    proceedstatus <- readline("The following procedure to import your data may take a while. Do you want to proceed? (y/n):    ")
     if (proceedstatus == "y") {
+        lapply(dbListConnections(PostgreSQL()), dbDisconnect)
         dirnames <- list.dirs(path = workdir, full.names = FALSE)
         dirnames <- dirnames[-1] # to remove the first empty folder name (check if this line will be an issue in windows)
         
@@ -31,7 +32,7 @@ moocr_import <- function(rmd = TRUE, workdir = getwd()) {
             system(temp2)
         }
         purrr::map(1:numcourses, ~ populate(dirnames[[.x]]))
-        setwd(workingdir)
+        setwd(workdir)
         
         
         # This is for connecting R to the databases
