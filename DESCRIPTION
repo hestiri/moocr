@@ -1,7 +1,8 @@
 Package: moocr
 Title: A package for cleaning and analyzing Coursera on-demand data
 Version: 0.1.0
-Authors@R: person("Aboozar", "Hadavand", email = "hadavand.a@gmail.edu", role = c("aut", "cre"))
+Author: Aboozar Hadavand [aut, cre] 
+Maintainer: Aboozar Hadavand <hadavand.a@gmail.com>
 Description: What the package does (one paragraph).
 Depends: R (>= 3.4.1)
 License: MIT
