@@ -64,7 +64,7 @@ moocr_import <- function(rmd = TRUE, workdir = getwd()) {
             assign(paste(y, "df", sep = "_"), purrr::map(1:numcourses, ~ tbl(courses[[.x]], y))) 
         }
         all_tables <<- purrr::map(1:length(tablenames), ~ assignment(tablenames[[.x]]))
-        coursenames <- purrr::map(1:numcourses, ~ tbl_df(all_tables[[85]][[.x]])$course_name) # Extracts course names, 85 is the number of table associated with table courses
+        coursenames <<- purrr::map(1:numcourses, ~ tbl_df(all_tables[[85]][[.x]])$course_name) # Extracts course names, 85 is the number of table associated with table courses
         names(courses) <- coursenames # Assigns course names to the list courses
         names(all_tables) <- tablenames
         
@@ -92,7 +92,7 @@ moocr_import <- function(rmd = TRUE, workdir = getwd()) {
                 dplyr::slice(which.max(as.Date(course_membership_ts, '%Y/%m/%d')))
         }
         if (rmd == TRUE) {
-            membership <- purrr::map(1:numcourses, ~ slicing(alltables[["course_memberships"]][[.x]]))  
+            membership <- purrr::map(1:numcourses, ~ slicing(all_tables[["course_memberships"]][[.x]]))  
         } else {
             print("Warning: There might be duplicate students since each student can take multiple roles", quote = FALSE)
         }

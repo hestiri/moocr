@@ -9,3 +9,4 @@ Encoding: UTF-8
 LazyData: true
 VignetteBuilder: knitr
 Suggests: knitr
+Imports: dplyr

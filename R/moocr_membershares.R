@@ -7,7 +7,7 @@ moocr_membershares <- function() {
              dplyr::summarise(nrows=n()) %>% 
              dplyr::mutate(freq=nrows/sum(nrows)) 
      }
-     membertable <- purrr::map(1:numcourses, ~ membershares(alltables[["course_memberships"]][[.x]]))
+     membertable <- purrr::map(1:numcourses, ~ membershares(all_tables[["course_memberships"]][[.x]]))
      names(membertable) <- coursenames
      return(membertable)
      #' ggplot(temp, aes(course_membership_role)) + geom_bar(aes(weight = freq)) 
