@@ -4,8 +4,8 @@ moocr_membershares <- function() {
          temp <- x %>%
              dplyr::filter(!is.na(course_membership_role)) %>% 
              dplyr::group_by(course_membership_role) %>% 
-             dplyr::summarise(nrows=n()) %>% 
-             dplyr::mutate(freq=nrows/sum(nrows)) 
+             dplyr::summarise(Total=n()) %>% 
+             dplyr::mutate(Share=Total/sum(Total)) 
      }
      membertable <- purrr::map(1:numcourses, ~ membershares(all_tables[["course_memberships"]][[.x]]))
      names(membertable) <- coursenames
