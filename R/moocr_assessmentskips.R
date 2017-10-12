@@ -1,6 +1,6 @@
 
 # This renders a table that shows the share of male/female individuals and their skipping categories.
-moocr_assessmentskips <- function(bygender = FALSE, n = 20) {
+moocr_assessmentskips <- function(bygender = FALSE, wordcount = TRUE, n = 20) {
     
     skippers <- function(x, y, z) {
         temp <- z %>% 
@@ -24,24 +24,28 @@ moocr_assessmentskips <- function(bygender = FALSE, n = 20) {
     }
     skiptable <- purrr::map(1:numcourses, ~ skippers(all_tables[["course_memberships"]][[.x]], all_tables[["peer_skips"]][[.x]], all_tables[["users"]][[.x]]))
     names(skiptable) <- coursenames
-
-    stopwords <- corpora("words/stopwords/en")$stopWords
     
-    word_cloud <- function(x) {
-        x <- tbl_df(x)
-        words <- tibble::tibble(title = x$peer_comment_text) %>%
-            unnest_tokens(word, title) %>%
-            dplyr::filter(!word %in% stopwords) %>%
-            dplyr::count(word, sort = TRUE)
-        list(knitr::kable(words[1:n,]))
+    if (wordcount == TRUE) {
+        stopwords <- corpora("words/stopwords/en")$stopWords
         
+        word_cloud <- function(x) {
+            x <- tbl_df(x)
+            words <- tibble::tibble(title = x$peer_comment_text) %>%
+                unnest_tokens(word, title) %>%
+                dplyr::filter(!word %in% stopwords) %>%
+                dplyr::count(word, sort = TRUE)
+            list(knitr::kable(words[1:n,]))
+            
+        }
+        
+        word_count <- purrr::map(1:numcourses, ~ word_cloud(all_tables[["peer_comments"]][[.x]]))
+        names(word_count) <- coursenames
+        
+        return(list(skiptable, word_count))
+    } else {
+        return(skiptable)
     }
-    
-    frequent_words <- purrr::map(1:numcourses, ~ word_cloud(all_tables[["peer_comments"]][[.x]]))
-    names(frequent_words) <- coursenames
 
-    return(list(skiptable, frequent_words))
-    
 }
 
 
