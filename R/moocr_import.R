@@ -79,9 +79,9 @@ moocr_import <- function(rmd = TRUE, workdir = getwd()) {
         if (rmd == TRUE) {
             all_tables[["course_membership"]] <<- purrr::map(1:numcourses, ~ slicing(all_tables[["course_memberships"]][[.x]]))  
         } else {
-            Message("Warning: There might be duplicate students since each student can take multiple roles")
+            message("Warning: There might be duplicate students since each student can take multiple roles")
         }
-        print(paste0(numcourses, " database(s) created and running:"), quote = FALSE)
-        print(paste0(coursenames))
+        message(paste0(numcourses, " database(s) created and running:"), quote = FALSE)
+        message(paste0(coursenames))
     }
 }
