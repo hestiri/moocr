@@ -81,7 +81,7 @@ moocr_import <- function(rmd = TRUE, workdir = getwd()) {
         } else {
             message("Warning: There might be duplicate students since each student can take multiple roles")
         }
-        message(paste0(numcourses, " database(s) created and running:"), quote = FALSE)
-        message(paste0(coursenames))
+        message(paste0(numcourses, " database(s) created and running:"))
+        print(paste0(coursenames))
     }
 }

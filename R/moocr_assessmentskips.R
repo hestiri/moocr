@@ -49,5 +49,14 @@ moocr_assessmentskips <- function(bygender = FALSE, wordcount = TRUE, n = 20) {
 }
 
 
+# afinn <- get_sentiments("afinn")
+# gh <- tbl_df(all_tables[["peer_comments"]][[1]])
+# sentiment_score <- tibble::tibble(title = gh$peer_comment_text) %>%
+#     dplyr::mutate(saved_title = title) %>%
+#     unnest_tokens(word, title) %>%
+#     dplyr::inner_join(afinn) %>%
+#     dplyr::group_by(saved_title) %>%
+#     dplyr::summarize(sentiment = sum(score)) %>%
+#     dplyr::filter(!is.na(sentiment))
 
 
