@@ -71,13 +71,15 @@ moocr_import <- function(rmd = TRUE, workdir = getwd()) {
         # Since there are duplicates for membership roles (there are rows with the same jhu_user_id but different membership roles), the following lines
         # will calculate the latest membership role and keep that for the jhu_user_id and delete all other rows.
         slicing <- function(x) {
-            x <- tbl_df(x) %>%
-                dplyr::filter(course_membership_role!="INSTRUCTOR", course_membership_role!="MENTOR") %>%
+            temp <- x %>%
+                dplyr::filter(course_membership_role!="INSTRUCTOR") %>%
+                dplyr::filter(course_membership_role!="MENTOR") %>% 
                 dplyr::group_by(jhu_user_id) %>%
-                dplyr::slice(which.max(as.Date(course_membership_ts, '%Y/%m/%d')))
+                dplyr::filter(course_membership_ts == max(course_membership_ts))
+                # dplyr::slice(which.max(as.Date(course_membership_ts, '%Y/%m/%d')))
         }
         if (rmd == TRUE) {
-            all_tables[["course_membership"]] <<- purrr::map(1:numcourses, ~ slicing(all_tables[["course_memberships"]][[.x]]))  
+            all_tables[["course_memberships"]] <<- purrr::map(1:numcourses, ~ slicing(all_tables[["course_memberships"]][[.x]]))  
         } else {
             message("Warning: There might be duplicate students since each student can take multiple roles")
         }
