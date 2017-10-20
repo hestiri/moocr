@@ -14,7 +14,6 @@ moocr_progress <- function(){
         
         itemorder <<- purrr::map(1:numcourses, ~ ordering(all_tables[["course_items"]][[.x]], all_tables[["course_lessons"]][[.x]], all_tables[["course_modules"]][[.x]]))
         
-        
         progress <- function(x, y){
 
             temp <- x %>%
@@ -26,7 +25,8 @@ moocr_progress <- function(){
                 dplyr::summarise(Total=n()) %>%
                 dplyr::arrange(desc(Total)) %>%
                 dplyr::mutate(Share=round(Total/sum(Total), 2)) %>% 
-                dplyr::left_join(y, by = "item_rank")
+                dplyr::left_join(y, by = "item_rank") %>% 
+                dplyr::select(item_rank, Total, Share, course_item_name, course_lesson_name, course_module_name)
             }
 
         last_activity <- purrr::map(1:numcourses, ~ progress(all_tables[["course_progress"]][[.x]], itemorder[[.x]]))
